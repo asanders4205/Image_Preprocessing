@@ -1,6 +1,7 @@
 '''
-# The goal of this process is to classify images as good quality or bad quality #
+# Image Quality Classifier #
 
+## The goal of this process is to classify images as good quality or bad quality! ##
 We will be using the BIQ2021 dataset found on Kaggle here:
 https://www.kaggle.com/datasets/nisarahmedrana/biq2021
 
