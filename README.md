@@ -6,7 +6,7 @@ We will be using the BIQ2021 dataset found on Kaggle here:\
 https://www.kaggle.com/datasets/nisarahmedrana/biq2021
 
 The processing will be done step-by-step\
-    and will reference the Data Mining Process outlined below\
+    and will reference the Data Mining Process outlined below
 
 
 Data Mining Process\
@@ -22,7 +22,7 @@ Preprocessing:  clean and handle missing/noisy data.\
 Transformation:  normalize, reduce, or engineer features \
 Data Mining:  apply algorithms (classification, clustering, etc.) \
 Evaluation:  assess results, interpret patterns \
-Knowledge/Deployment:  use insights in decision-making \
+Knowledge/Deployment:  use insights in decision-making
 
 
 ## To get started ##
