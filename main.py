@@ -3,11 +3,7 @@ import kagglehub
 from PIL import Image, UnidentifiedImageError
 import shutil
 
-''' Selection:  identify and collect relevant data.
-    Loading dataset'''
-# Load dataset from Kaggle
 path = kagglehub.dataset_download("nisarahmedrana/biq2021")
-# print("Dataset files stored at:", path)
 
 
 def verify_files(path: str) -> None:

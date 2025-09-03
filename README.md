@@ -1,33 +1,35 @@
-'''Define the goal of this project
-The goal of this project is to classify images based on their quality, 
-using various image processing techniques and machine learning algorithms
 '''
+# The goal of this process is to classify images as good quality or bad quality #
 
-''' Data Mining Process
-Selection:  identify and collect relevant data.
+We will be using the BIQ2021 dataset found on Kaggle here:
+https://www.kaggle.com/datasets/nisarahmedrana/biq2021
+
+The processing will be done step-by-step
+    and will reference the Data Mining Process outlined below
+
+
+Data Mining Process
+Selection:  identify and collect relevant data
+    Load in the dataset
 Preprocessing:  clean and handle missing/noisy data.
-Transformation:  normalize, reduce, or engineer features.
-Data Mining:  apply algorithms (classification, clustering, etc.).
-Evaluation:  assess results, interpret patterns.
-Knowledge/Deployment:  use insights in decision-making.
-'''
-
-
-''' Selection:  identify and collect relevant data.
-    Loading dataset'''
-
-'''Preprocessing:  clean and handle missing/noisy data
     Resizing
     Grayscaling
     Noise reduction
     Normalization
     Binarization
     Contrast enhancement
-'''
+Transformation:  normalize, reduce, or engineer features.
+Data Mining:  apply algorithms (classification, clustering, etc.).
+Evaluation:  assess results, interpret patterns.
+Knowledge/Deployment:  use insights in decision-making.
 
 
+## To get started ##
+Create a 'data' folder in your project directory 
+In your terminal run 'pip install -r requirements.txt' to install requirements
 
-'''
-    Data cleaning - make sure all files in the directory are images
-    Resize misshapen images
-'''
+Execute the code to download the dataset via this line
+    path = kagglehub.dataset_download("nisarahmedrana/biq2021")
+
+
+README will be updated as the project moves along
