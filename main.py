@@ -90,6 +90,9 @@ def main():
     #TODO resize_image function
 
 
+    #TODO Find out why the contents of /data are not remaining in the folder between runs
+
+
 
 if __name__=="__main__": 
     main()
