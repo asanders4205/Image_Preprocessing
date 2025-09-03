@@ -19,18 +19,15 @@ Preprocessing:  clean and handle missing/noisy data.\
     Normalization\
     Binarization\
     Contrast enhancement\
-Transformation:  normalize, reduce, or engineer features.\
-Data Mining:  apply algorithms (classification, clustering, etc.).\
-Evaluation:  assess results, interpret patterns.\
-Knowledge/Deployment:  use insights in decision-making.\
+Transformation:  normalize, reduce, or engineer features \
+Data Mining:  apply algorithms (classification, clustering, etc.) \
+Evaluation:  assess results, interpret patterns \
+Knowledge/Deployment:  use insights in decision-making \
 
 
 ## To get started ##
 Create a 'data' folder in your project directory \
 In your terminal run 'pip install -r requirements.txt' to install requirements \
-
 Execute the code to download the dataset via this line\
     path = kagglehub.dataset_download("nisarahmedrana/biq2021") \
-
-
 README will be updated as the project moves along
