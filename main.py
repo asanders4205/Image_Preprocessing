@@ -5,7 +5,7 @@ import shutil
 
 
 
-def images_are_loaded() -> bool: #TODO generalize filepaths
+def images_not_loaded() -> bool: #TODO generalize filepaths
     '''Check if the image dataset is loaded already
         See if directory contents are the same quantity
         No parameters
@@ -22,9 +22,9 @@ def images_are_loaded() -> bool: #TODO generalize filepaths
     print(f'count_diff: {count_diff}')
 
     if count_diff == 0:
-        return True
-    else:
         return False
+    else:
+        return True
 
 def verify_files(path: str, target_size: tuple[int,int] = (512, 512)) -> None:
     ''' verify_files
@@ -99,16 +99,15 @@ def main():
     # data_path = kagglehub.dataset_download(kaggle_path)
     # data_path = r"C:\\Users\\alecs\\.cache\\kagglehub\\datasets\\nisarahmedrana\\biq2021\versions\\4"
     '''
-
     data_path = r'input_images'
 
-    ''' Open an image
+    ''' Open an image to verify loading
     # sample_image_path = os.path.join(data_path, "Images (1).jpg")  # TODO generalize and adjust based on folder layout
     # img = Image.open(sample_image_path)
     '''
 
-
-    if not images_are_loaded():
+    #Verify images are loaded
+    if images_not_loaded():
         print('Directories are different, verifying input...')
         verify_files(data_path)
     else:
