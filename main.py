@@ -3,6 +3,7 @@ import kagglehub
 from PIL import Image, UnidentifiedImageError
 import shutil
 import cv2 # Normalising pixels
+from dotenv import load_dotenv
 
 
 
@@ -26,6 +27,7 @@ def images_not_loaded(folder_1: str, folder_2: str) -> bool:
         return False
     else:
         return True
+
 
 def preprocess_images(path: str, target_size: tuple[int,int] = (512, 512)) -> None:
     ''' verify_files
@@ -107,8 +109,14 @@ def main():
     # sample_image_path = os.path.join(data_path, "Images (1).jpg")  # TODO generalize and adjust based on folder layout
     # img = Image.open(sample_image_path)
     '''
+    
+    # Load dotenv
+    load_dotenv()
+
+
     data_path = r'input_images'
-    images_origin = r"C:\\Users\\alecs\\.cache\\kagglehub\\datasets\\nisarahmedrana\\biq2021\versions\\4"
+    #images_origin = r"C:\\Users\\alecs\\.cache\\kagglehub\\datasets\\nisarahmedrana\\biq2021\versions\\4"
+    images_origin = os.getenv("images_filepath") # Name of variable in .env file
 
     #Verify images are loaded
     if images_not_loaded(data_path, images_origin):
@@ -121,13 +129,6 @@ def main():
     # images are of same size and pixels are normalised
 
 
-'''
-    folder_1 = "input_images"
-    count_1 = sum(1 for f in os.listdir(folder_1) if os.path.isfile(os.path.join(folder_1, f)))
-
-    folder_2 = r"C:\\Users\\alecs\\.cache\\kagglehub\\datasets\\nisarahmedrana\\biq2021\versions\\4"
-    count_2 = sum(1 for f in os.listdir(folder_2) if os.path.isfile(os.path.join(folder_2, f)))
-'''
 
 
 if __name__=="__main__": 
