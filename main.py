@@ -7,7 +7,9 @@ import shutil
 
 def images_are_loaded() -> bool: #TODO generalize filepaths
     '''Check if the image dataset is loaded already
-        See if directory contents are the same
+        See if directory contents are the same quantity
+        No parameters
+        Return true or false
     '''
 
     folder_1 = "input_images"
@@ -23,11 +25,6 @@ def images_are_loaded() -> bool: #TODO generalize filepaths
         return True
     else:
         return False
-
-
-
-
-
 
 def verify_files(path: str, target_size: tuple[int,int] = (512, 512)) -> None:
     ''' verify_files
@@ -82,9 +79,6 @@ def verify_files(path: str, target_size: tuple[int,int] = (512, 512)) -> None:
             # Image is not the proper size
             if img.size != target_size:
 
-                # Give error message
-                # print(f"Improperly sized file: {file_name}: {img.size}")
-
                 # Resize the image and save
                 print(f'Resizing image {file_name}')
 
@@ -95,20 +89,24 @@ def verify_files(path: str, target_size: tuple[int,int] = (512, 512)) -> None:
     print(f'Files validated. All images are of size {target_size}')
 
 
+
+
 def main():
 
+    ''' Setting up input
     # Grab the part of the URL after kaggle.com/datasets/   and assign it to kaggle_path
-    
-    
-    
     # kaggle_path = "nisarahmedrana/biq2021"
     # data_path = kagglehub.dataset_download(kaggle_path)
     # data_path = r"C:\\Users\\alecs\\.cache\\kagglehub\\datasets\\nisarahmedrana\\biq2021\versions\\4"
+    '''
+
     data_path = r'input_images'
 
-    # Open an image
-    sample_image_path = os.path.join(data_path, "Images (1).jpg")  # TODO generalize and adjust based on folder layout
-    img = Image.open(sample_image_path)
+    ''' Open an image
+    # sample_image_path = os.path.join(data_path, "Images (1).jpg")  # TODO generalize and adjust based on folder layout
+    # img = Image.open(sample_image_path)
+    '''
+
 
     if not images_are_loaded():
         print('Directories are different, verifying input...')
