@@ -3,7 +3,7 @@
 
 ## The goal of this process is to classify images as good quality or bad quality! ##
 
-We will be using the BIQ2021 dataset found on Kaggle here:\
+Programmed using the BIQ2021 dataset found on Kaggle here:\
 https://www.kaggle.com/datasets/nisarahmedrana/biq2021
 
 
@@ -37,3 +37,7 @@ Execute the code to download the dataset via this line\
     path = kagglehub.dataset_download("nisarahmedrana/biq2021") \
 
 README will be updated as the project moves along
+
+
+## Future expansions ##
+- Compatibility with image datasets outside of Kaggle

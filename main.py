@@ -5,6 +5,16 @@ import shutil
 
 
 
+def images_are_loaded(path: str) -> int:
+    '''Check if the image dataset is loaded already
+        See if 
+
+    '''
+
+
+
+
+
 
 def verify_files(path: str, target_size: tuple[int,int] = (512, 512)) -> None:
     ''' verify_files
@@ -16,27 +26,28 @@ def verify_files(path: str, target_size: tuple[int,int] = (512, 512)) -> None:
         Return: None
     '''
 
+
     valid_exts = {".jpg", ".jpeg", ".png", ".gif", ".bmp", ".tiff"}
+
 
     # Repository for bad files
     bad_dir = 'bad_files'
     os.makedirs(bad_dir, exist_ok=True)
+    resized_counter = 0 # Count and name resized image
+
 
 
     # Check each file in the directory
-    for file_name in os.listdir(path):
-        resized_counter = 0 # Count and name resized images
-        prefix = 'resized_image_'
+    for file_name in sorted(os.listdir(path)):
 
-        # Grab the file extension:   _ is a throwaway variable ext will hold the file extension
-        _, ext = os.path.splitext(file_name)
+        prefix = 'resized_image_'
+        _, ext = os.path.splitext(file_name)   # Grab the file extension:   _ is a throwaway variable ext will hold the file extension
 
         # Ensure lowercase
         ext = ext.lower()
 
         # Store location of image
         image_path = os.path.join(path,file_name)
-
 
         # Verify all files are images (have file extensions in the list of known image formats)
         if ext not in valid_exts:
@@ -52,8 +63,6 @@ def verify_files(path: str, target_size: tuple[int,int] = (512, 512)) -> None:
                 shutil.move(image_path, bad_dir)
 
 
-
-
         # Verify all images are of the same size
         with Image.open(image_path) as img:     # Open image file and find the size
 
@@ -65,32 +74,31 @@ def verify_files(path: str, target_size: tuple[int,int] = (512, 512)) -> None:
 
                 # Resize the image and save
                 print(f'Resizing image {file_name}')
-                image_path = img.resize((512,512))
 
-                updated_filename = f"{resized_counter}.{ext}" # A file counter for resized images, and the saved file extension
-
-                image_path.save(os.path.join(updated_filename))
+                resized_img = img.resize(target_size)
+                updated_filename = f"resized_{resized_counter}{ext}" # A file counter for resized images, and the saved file extension
+                resized_img.save(os.path.join(path, updated_filename))
 
     print(f'Files validated. All images are of size {target_size}')
 
 
 def main():
 
-    data_path = kagglehub.dataset_download("nisarahmedrana/biq2021")
+    # Grab the part of the URL after kaggle.com/datasets/   and assign it to kaggle_path
+    
+    
+    
+    # kaggle_path = "nisarahmedrana/biq2021"
+    # data_path = kagglehub.dataset_download(kaggle_path)
+    data_path = r"C:\\Users\\alecs\\.cache\\kagglehub\\datasets\\nisarahmedrana\\biq2021\versions\\4"
+
 
     # Open an image
     sample_image_path = os.path.join(data_path, "Images (1).jpg")  # TODO generalize and adjust based on folder layout
     img = Image.open(sample_image_path)
 
-    #image_size = (512, 512)
-
     verify_files(data_path)
 
-    #TODO rename all images so there is not a space in the name
-    #TODO resize_image function
-
-
-    #TODO Find out why the contents of /data are not remaining in the folder between runs
 
 
 
