@@ -2,10 +2,11 @@ import os
 import kagglehub
 from PIL import Image, UnidentifiedImageError
 import shutil
+import cv2 # Normalising pixels
 
 
 
-def images_not_loaded() -> bool: #TODO generalize filepaths
+def images_not_loaded(folder_1: str, folder_2: str) -> bool:
     '''Check if the image dataset is loaded already
         See if directory contents are the same quantity
         No parameters
@@ -26,7 +27,7 @@ def images_not_loaded() -> bool: #TODO generalize filepaths
     else:
         return True
 
-def verify_files(path: str, target_size: tuple[int,int] = (512, 512)) -> None:
+def preprocess_images(path: str, target_size: tuple[int,int] = (512, 512)) -> None:
     ''' verify_files
         Verifies that all files in a provided directory are uniformly sized images
         If a non-image file is found, move it to bad_files folder (created within the function)
@@ -44,10 +45,9 @@ def verify_files(path: str, target_size: tuple[int,int] = (512, 512)) -> None:
     bad_dir = 'bad_files'
     os.makedirs(bad_dir, exist_ok=True)
     resized_counter = 0 # Count and name resized image
+    PIXEL_COUNT = 255.0 # Regular RGB pixel count
 
 
-
-    # Check each file in the directory
     for file_name in sorted(os.listdir(path)):
 
         prefix = 'resized_image_'
@@ -74,7 +74,7 @@ def verify_files(path: str, target_size: tuple[int,int] = (512, 512)) -> None:
 
 
         # Verify all images are of the same size
-        with Image.open(image_path) as img:     # Open image file and find the size
+        with Image.open(image_path) as img:
 
             # Image is not the proper size
             if img.size != target_size:
@@ -86,7 +86,12 @@ def verify_files(path: str, target_size: tuple[int,int] = (512, 512)) -> None:
                 updated_filename = f"resized_{resized_counter}{ext}" # A file counter for resized images, and the saved file extension
                 resized_img.save(os.path.join(path, updated_filename))
 
+        # Normalise the pixel values - scale to 0 (black) and 1 (white)
+        Img = cv2.imread(file_name)
+        normalized = img / PIXEL_COUNT
+
     print(f'Files validated. All images are of size {target_size}')
+    print('Pixels normalised')
 
 
 
@@ -98,22 +103,31 @@ def main():
     # kaggle_path = "nisarahmedrana/biq2021"
     # data_path = kagglehub.dataset_download(kaggle_path)
     # data_path = r"C:\\Users\\alecs\\.cache\\kagglehub\\datasets\\nisarahmedrana\\biq2021\versions\\4"
-    '''
-    data_path = r'input_images'
 
-    ''' Open an image to verify loading
     # sample_image_path = os.path.join(data_path, "Images (1).jpg")  # TODO generalize and adjust based on folder layout
     # img = Image.open(sample_image_path)
     '''
+    data_path = r'input_images'
+    images_origin = r"C:\\Users\\alecs\\.cache\\kagglehub\\datasets\\nisarahmedrana\\biq2021\versions\\4"
 
     #Verify images are loaded
-    if images_not_loaded():
+    if images_not_loaded(data_path, images_origin):
         print('Directories are different, verifying input...')
-        verify_files(data_path)
+        preprocess_images(data_path)
     else:
         print("Direcories the same, moving on.")
 
 
+    # images are of same size and pixels are normalised
+
+
+'''
+    folder_1 = "input_images"
+    count_1 = sum(1 for f in os.listdir(folder_1) if os.path.isfile(os.path.join(folder_1, f)))
+
+    folder_2 = r"C:\\Users\\alecs\\.cache\\kagglehub\\datasets\\nisarahmedrana\\biq2021\versions\\4"
+    count_2 = sum(1 for f in os.listdir(folder_2) if os.path.isfile(os.path.join(folder_2, f)))
+'''
 
 
 if __name__=="__main__": 
