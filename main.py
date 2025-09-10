@@ -77,14 +77,31 @@ def verify_images_are_uniform_size(path: str, target_size: tuple[int, int] = (51
     print(f'Files validated. All images are of size {target_size}')
 
 
+
+def process_filenames(path: str):
+    '''Remove certain characters from filenames
+    '''
+    
+    replacements = {" ":"_","(":"",")":""}
+    files = sorted(os.listdir(path))
+
+    for file_name in files:
+        new_name = file_name
+        for old,new in replacements.items():
+            new_name = new_name.replace(old, new)
+
+
+
+
+
 def preprocess_images(path: str, target_size: tuple[int, int] = (512, 512)) -> None:
     """
     Runs both verification steps: file type and image size.
     """
     verify_files_are_images(path)
     verify_images_are_uniform_size(path, target_size)
+    process_filenames(path)
     # print('Pixels normalized')
-
 
 
 
