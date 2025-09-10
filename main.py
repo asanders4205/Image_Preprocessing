@@ -83,16 +83,24 @@ def preprocess_images(path: str, target_size: tuple[int, int] = (512, 512)) -> N
     """
     verify_files_are_images(path)
     verify_images_are_uniform_size(path, target_size)
-    # print('Pixels normalised')
+    # print('Pixels normalized')
 
 
 
 
 
-def normalise_pixel_values(maximum_pixel_value: float = 255.0):
+def normalize_pixel_values(maximum_pixel_value: float = 255.0, path: str):
     '''Constant brightness
     Param: Max pixel value, default of 255.0
     '''
+
+    for file_name in sorted(os.listdir(path)):
+        img = cv2.imread(file_name)
+        normalized = img / maximum_pixel_value
+
+
+print(f'Image pixels normalized. All images are of size {target_size}')
+
 
 
 
@@ -112,8 +120,8 @@ def main():
     else:
         print("Direcories the same, moving on.")
 
-    # Normalise pixels via Min Max (dividing by the max value)
-    # normalise_pixel_values() TODO uncomment
+    # normalize pixels via Min Max (dividing by the max value)
+    # normalize_pixel_values() #TODO uncomment
 
 
 
