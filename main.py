@@ -4,6 +4,7 @@ from PIL import Image, UnidentifiedImageError
 import shutil
 import cv2 # Normalising pixels
 from dotenv import load_dotenv
+import time
 
 def images_not_loaded(folder_1: str, folder_2: str) -> bool:
     '''Check if the image dataset is loaded already
@@ -81,7 +82,7 @@ def verify_images_are_uniform_size(path: str, target_size: tuple[int, int] = (51
 def process_filenames(path: str):
     '''Remove certain characters from filenames
     '''
-    
+    print('Processing filenames')
     replacements = {" ":"_", "(":"", ")":""}
     files = sorted(os.listdir(path))
     counter = 0
@@ -108,9 +109,16 @@ def preprocess_images(path: str, target_size: tuple[int, int] = (512, 512)) -> N
     """
     Runs both verification steps: file type and image size.
     """
+
+    start = time.perf_counter() # Start clock
+
     verify_files_are_images(path)
     verify_images_are_uniform_size(path, target_size)
     process_filenames(path)
+
+    elapsed = time.perf_counter() - start # End clock
+    print(f'Elapsed time: {round(elapsed,2)} seconds')
+
 
 
 '''
@@ -142,7 +150,7 @@ def main():
         print('Directories are different, verifying input...')
         preprocess_images(data_path)
     else:
-        print("Direcories the same, moving on.")
+        print("Directories the same, moving on.")
 
     
     # Process filenames outside
