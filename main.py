@@ -89,7 +89,7 @@ def preprocess_images(path: str, target_size: tuple[int, int] = (512, 512)) -> N
 
 
 
-def normalize_pixel_values(maximum_pixel_value: float = 255.0, path: str):
+def normalize_pixel_values(path: str, maximum_pixel_value: float = 255.0):
     '''Constant brightness
     Param: Max pixel value, default of 255.0
     '''
@@ -98,8 +98,7 @@ def normalize_pixel_values(maximum_pixel_value: float = 255.0, path: str):
         img = cv2.imread(file_name)
         normalized = img / maximum_pixel_value
 
-
-print(f'Image pixels normalized. All images are of size {target_size}')
+    print(f'Image pixels normalized to {maximum_pixel_value}')
 
 
 
@@ -110,7 +109,7 @@ def main():
     load_dotenv()
 
 
-    data_path = r'input_images'
+    data_path = r'input_images' # Hold images in project directory for development
     images_origin = os.getenv("images_filepath") # Name of variable in .env file
 
     #Verify images are loaded
@@ -121,7 +120,7 @@ def main():
         print("Direcories the same, moving on.")
 
     # normalize pixels via Min Max (dividing by the max value)
-    # normalize_pixel_values() #TODO uncomment
+    normalize_pixel_values(data_path)
 
 
 
