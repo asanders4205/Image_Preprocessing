@@ -83,20 +83,20 @@ def preprocess_images(path: str, target_size: tuple[int, int] = (512, 512)) -> N
     """
     verify_files_are_images(path)
     verify_images_are_uniform_size(path, target_size)
-    print('Pixels normalised')
+    # print('Pixels normalised')
+
+
+
+
+
+def normalise_pixel_values(maximum_pixel_value: float = 255.0):
+    '''Constant brightness
+    Param: Max pixel value, default of 255.0
+    '''
+
 
 
 def main():
-
-    ''' Setting up input
-    # Grab the part of the URL after kaggle.com/datasets/   and assign it to kaggle_path
-    # kaggle_path = "nisarahmedrana/biq2021"
-    # data_path = kagglehub.dataset_download(kaggle_path)
-    # data_path = r"C:\\Users\\alecs\\.cache\\kagglehub\\datasets\\nisarahmedrana\\biq2021\versions\\4"
-
-    # sample_image_path = os.path.join(data_path, "Images (1).jpg")  # TODO generalize and adjust based on folder layout
-    # img = Image.open(sample_image_path)
-    '''
     
     # Load dotenv
     load_dotenv()
@@ -112,6 +112,8 @@ def main():
     else:
         print("Direcories the same, moving on.")
 
+    # Normalise pixels via Min Max (dividing by the max value)
+    # normalise_pixel_values() TODO uncomment
 
 
 
