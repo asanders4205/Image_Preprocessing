@@ -82,13 +82,23 @@ def process_filenames(path: str):
     '''Remove certain characters from filenames
     '''
     
-    replacements = {" ":"_","(":"",")":""}
+    replacements = {" ":"_", "(":"", ")":""}
     files = sorted(os.listdir(path))
+    counter = 0
 
     for file_name in files:
         new_name = file_name
+        # counter += 1
         for old,new in replacements.items():
             new_name = new_name.replace(old, new)
+            
+        if new_name != file_name: # Rename if changed
+            old_path = os.path.join(path, file_name)
+            new_path = os.path.join(path, new_name)
+            os.rename(old_path, new_path)
+            counter += 1
+
+    print(f'Filenames processed: {counter} filenames changed')
 
 
 
@@ -101,22 +111,20 @@ def preprocess_images(path: str, target_size: tuple[int, int] = (512, 512)) -> N
     verify_files_are_images(path)
     verify_images_are_uniform_size(path, target_size)
     process_filenames(path)
-    # print('Pixels normalized')
 
 
-
-
+'''
 def normalize_pixel_values(path: str, maximum_pixel_value: float = 255.0):
-    '''Constant brightness
+    \'''Constant brightness
     Param: Max pixel value, default of 255.0
-    '''
+    \'''
 
     for file_name in sorted(os.listdir(path)):
         img = cv2.imread(file_name)
         normalized = img / maximum_pixel_value
 
     print(f'Image pixels normalized to {maximum_pixel_value}')
-
+'''
 
 
 
@@ -136,8 +144,12 @@ def main():
     else:
         print("Direcories the same, moving on.")
 
+    
+    # Process filenames outside
+    process_filenames(data_path)
+
     # normalize pixels via Min Max (dividing by the max value)
-    normalize_pixel_values(data_path)
+    # normalize_pixel_values(data_path) #FIXME
 
 
 
