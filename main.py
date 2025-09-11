@@ -108,25 +108,9 @@ def preprocess_images(path: str, target_size: tuple[int, int] = (512, 512)) -> N
 
     # start = time.perf_counter() # Start clock
     verify_files_are_images(path)
-    # elapsed = time.perf_counter() - start # End clock
-    # print(f'Verified images - Elapsed time: {round(elapsed,2)} seconds')
-
-
-    # start = time.perf_counter() # Start clock
-
     verify_images_are_uniform_size(path, target_size)
-    # elapsed = time.perf_counter() - start # End clock
-    # print(f'Verified size - Elapsed time: {round(elapsed,2)} seconds')
-
-
-
-    # start = time.perf_counter() # Start clock
     process_filenames(path)
-    # elapsed = time.perf_counter() - start # End clock
-    # print(f'Processed filenames - Elapsed time: {round(elapsed,2)} seconds')
-
-    # elapsed = time.perf_counter() - start # End clock
-    # print(f'Elapsed time: {round(elapsed,2)} seconds')
+    normalize_pixel_values(path)
 
 
 
