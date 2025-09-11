@@ -20,7 +20,7 @@ def images_not_loaded(folder_1: str, folder_2: str) -> bool:
     count_2 = sum(1 for f in os.listdir(folder_2) if os.path.isfile(os.path.join(folder_2, f)))
 
     count_diff = count_1 - count_2
-    print(f'count_diff: {count_diff}')
+    # print(f'count_diff: {count_diff}')
 
     if count_diff == 0:
         return False
@@ -113,8 +113,6 @@ def preprocess_images(path: str, target_size: tuple[int, int] = (512, 512)) -> N
     normalize_pixel_values(path)
 
 
-
-
 def normalize_pixel_values(path: str, maximum_pixel_value: float = 255.0):
     '''Constant brightness
     Param: Max pixel value, default of 255.0
@@ -150,16 +148,16 @@ def main():
     #Verify images are loaded
     if images_not_loaded(data_path, images_origin):
         print('Directories are different, verifying input...')
-        preprocess_images(data_path)
+        preprocess_images(data_path) # verify images, verify size, process filenames, normalize pixel values
     else:
         print("Directories the same, moving on.")
 
     
     # Process filenames outside
-    process_filenames(data_path)
+    # process_filenames(data_path)
 
     # normalize pixels via Min Max (dividing by the max value)
-    normalize_pixel_values(data_path)
+    # normalize_pixel_values(data_path)
 
 
 
