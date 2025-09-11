@@ -197,11 +197,18 @@ def main():
     else:
         print("Directories the same, moving on.")
 
-    print('normalizing pixel values (main)')
-    normalize_pixel_values(data_path)
+    # print('normalizing pixel values (main)')
+    # normalize_pixel_values(data_path)
 
     # Sharpen images
-    # sharpen_images(data_path)
+    # sharpen_images(data_path) #FIXME
+    # TODO Debug sharpen_images
+    ''' Error message
+        Directories the same, moving on.
+    [ WARN:0@87.844] global loadsave.cpp:275 cv::findDecoder imread_('input_images\normalized'): can't open/read file: check file path/integrity
+    Could not read {file_path}
+    Sharpened images - Elapsed time: 87.27 seconds
+    '''
 
 
 
