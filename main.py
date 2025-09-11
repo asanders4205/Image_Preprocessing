@@ -112,7 +112,7 @@ def preprocess_images(path: str, target_size: tuple[int, int] = (512, 512)) -> N
     verify_files_are_images(path)
     verify_images_are_uniform_size(path, target_size)
     process_filenames(path)
-    normalize_pixel_values(path)
+    # normalize_pixel_values(path)
 
 
 def normalize_pixel_values(path: str, maximum_pixel_value: float = 255.0):
@@ -144,11 +144,8 @@ def normalize_pixel_values(path: str, maximum_pixel_value: float = 255.0):
     print(f'Elapsed time - Normalizing pixel values: {round(elapsed,2)} seconds')
 
 
-
-'''
 def sharpen_images(path: str): #FIXME - Saves images in parent folder
     #Sharpen images with cv2.filter2D()
-    
 
     start = time.perf_counter() # Start clock
 
@@ -168,17 +165,21 @@ def sharpen_images(path: str): #FIXME - Saves images in parent folder
             continue
 
         # Sharpen the image
-        sharpened_image = cv2.filter2D(img, -1, kernel)
+        save_img = cv2.filter2D(img, -1, kernel)
 
-
-        # Save the image
-        cv2.imwrite(file_name, sharpened_image)
-
-    print('Images sharpened')
+        out_path = os.path.join(path, file_name)
+        cv2.imwrite(out_path, save_img)
 
     elapsed = time.perf_counter() - start # End clock
     print(f'Sharpened images - Elapsed time: {round(elapsed,2)} seconds')
-'''
+
+
+
+
+
+
+
+
 
 def main():
     
@@ -195,7 +196,10 @@ def main():
         preprocess_images(data_path) # verify images, verify size, process filenames, normalize pixel values
     else:
         print("Directories the same, moving on.")
-    
+
+    print('normalizing pixel values (main)')
+    normalize_pixel_values(data_path)
+
     # Sharpen images
     # sharpen_images(data_path)
 
