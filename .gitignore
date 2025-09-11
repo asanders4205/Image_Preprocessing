@@ -3,6 +3,10 @@
 /data
 /input_images
 /venv
-0..jpg
 todo
 documentation.txt
+
+# Don't add images to git
+/*.jpg
+*.jpg
+*.img

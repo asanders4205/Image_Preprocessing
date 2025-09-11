@@ -2,3 +2,4 @@ python-dotenv
 kagglehub
 pillow
 opencv-python
+numpy

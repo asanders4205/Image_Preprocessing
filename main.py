@@ -2,9 +2,11 @@ import os
 import kagglehub
 from PIL import Image, UnidentifiedImageError
 import shutil
-import cv2 # Normalising pixels
+import cv2
 from dotenv import load_dotenv
 import time
+import numpy as np
+
 
 def images_not_loaded(folder_1: str, folder_2: str) -> bool:
     '''Check if the image dataset is loaded already
@@ -103,7 +105,7 @@ def process_filenames(path: str):
 
 def preprocess_images(path: str, target_size: tuple[int, int] = (512, 512)) -> None:
     """
-    Runs both verification steps: file type and image size.
+    Runs verification steps: file type, image size, process filenames and normalize pixel values #TODO consider mulithreading
     """
 
     # start = time.perf_counter() # Start clock
@@ -120,13 +122,22 @@ def normalize_pixel_values(path: str, maximum_pixel_value: float = 255.0):
 
     start = time.perf_counter() # Start clock
 
+    output_dir = os.path.join(path, 'normalized') # Make directory of normalized images
+    os.makedirs(output_dir, exist_ok=True)
+
     for file_name in sorted(os.listdir(path)):
         file_path = os.path.join(path,file_name)
         img = cv2.imread(file_path)
         if img is None:
             print("Could not read {file_path}")
             continue
-    normalized = img/ maximum_pixel_value
+        normalized = img/ maximum_pixel_value
+
+        # Scale for saving
+        save_img = (normalized * 255).astype('uint8')
+
+        out_path = os.path.join(output_dir, file_name)
+        cv2.imwrite(out_path, save_img)
 
     elapsed = time.perf_counter() - start # End clock
     print(f'Image pixels normalized to {maximum_pixel_value}')
@@ -134,7 +145,40 @@ def normalize_pixel_values(path: str, maximum_pixel_value: float = 255.0):
 
 
 
+'''
+def sharpen_images(path: str): #FIXME - Saves images in parent folder
+    #Sharpen images with cv2.filter2D()
+    
 
+    start = time.perf_counter() # Start clock
+
+    # Create the sharpening kernel
+    kernel = np.array([
+        [0,-1,0],
+        [-1,5,-1],
+        [0,-1,0]
+    ]) # end kernel
+
+
+    for file_name in sorted(os.listdir(path)):
+        file_path = os.path.join(path,file_name)
+        img = cv2.imread(file_path)
+        if img is None:
+            print("Could not read {file_path}")
+            continue
+
+        # Sharpen the image
+        sharpened_image = cv2.filter2D(img, -1, kernel)
+
+
+        # Save the image
+        cv2.imwrite(file_name, sharpened_image)
+
+    print('Images sharpened')
+
+    elapsed = time.perf_counter() - start # End clock
+    print(f'Sharpened images - Elapsed time: {round(elapsed,2)} seconds')
+'''
 
 def main():
     
@@ -147,17 +191,17 @@ def main():
 
     #Verify images are loaded
     if images_not_loaded(data_path, images_origin):
-        print('Directories are different, verifying input...')
+        print('Loading and processing images...')
         preprocess_images(data_path) # verify images, verify size, process filenames, normalize pixel values
     else:
         print("Directories the same, moving on.")
+    
+    # Sharpen images
+    # sharpen_images(data_path)
+
+
 
     
-    # Process filenames outside
-    # process_filenames(data_path)
-
-    # normalize pixels via Min Max (dividing by the max value)
-    # normalize_pixel_values(data_path)
 
 
 
