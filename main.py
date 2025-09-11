@@ -106,14 +106,27 @@ def preprocess_images(path: str, target_size: tuple[int, int] = (512, 512)) -> N
     Runs both verification steps: file type and image size.
     """
 
-    start = time.perf_counter() # Start clock
-
+    # start = time.perf_counter() # Start clock
     verify_files_are_images(path)
-    verify_images_are_uniform_size(path, target_size)
-    process_filenames(path)
+    # elapsed = time.perf_counter() - start # End clock
+    # print(f'Verified images - Elapsed time: {round(elapsed,2)} seconds')
 
-    elapsed = time.perf_counter() - start # End clock
-    print(f'Elapsed time: {round(elapsed,2)} seconds')
+
+    # start = time.perf_counter() # Start clock
+
+    verify_images_are_uniform_size(path, target_size)
+    # elapsed = time.perf_counter() - start # End clock
+    # print(f'Verified size - Elapsed time: {round(elapsed,2)} seconds')
+
+
+
+    # start = time.perf_counter() # Start clock
+    process_filenames(path)
+    # elapsed = time.perf_counter() - start # End clock
+    # print(f'Processed filenames - Elapsed time: {round(elapsed,2)} seconds')
+
+    # elapsed = time.perf_counter() - start # End clock
+    # print(f'Elapsed time: {round(elapsed,2)} seconds')
 
 
 
@@ -123,6 +136,8 @@ def normalize_pixel_values(path: str, maximum_pixel_value: float = 255.0):
     Param: Max pixel value, default of 255.0
     '''
 
+    start = time.perf_counter() # Start clock
+
     for file_name in sorted(os.listdir(path)):
         file_path = os.path.join(path,file_name)
         img = cv2.imread(file_path)
@@ -131,8 +146,11 @@ def normalize_pixel_values(path: str, maximum_pixel_value: float = 255.0):
             continue
     normalized = img/ maximum_pixel_value
 
-
+    elapsed = time.perf_counter() - start # End clock
     print(f'Image pixels normalized to {maximum_pixel_value}')
+    print(f'Elapsed time - Normalizing pixel values: {round(elapsed,2)} seconds')
+
+
 
 
 
