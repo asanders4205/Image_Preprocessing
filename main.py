@@ -78,7 +78,6 @@ def verify_images_are_uniform_size(path: str, target_size: tuple[int, int] = (51
     print(f'Files validated. All images are of size {target_size}')
 
 
-
 def process_filenames(path: str):
     '''Remove certain characters from filenames
     '''
@@ -102,9 +101,6 @@ def process_filenames(path: str):
     print(f'Filenames processed: {counter} filenames changed')
 
 
-
-
-
 def preprocess_images(path: str, target_size: tuple[int, int] = (512, 512)) -> None:
     """
     Runs both verification steps: file type and image size.
@@ -121,18 +117,22 @@ def preprocess_images(path: str, target_size: tuple[int, int] = (512, 512)) -> N
 
 
 
-'''
+
 def normalize_pixel_values(path: str, maximum_pixel_value: float = 255.0):
-    \'''Constant brightness
+    '''Constant brightness
     Param: Max pixel value, default of 255.0
-    \'''
+    '''
 
     for file_name in sorted(os.listdir(path)):
-        img = cv2.imread(file_name)
-        normalized = img / maximum_pixel_value
+        file_path = os.path.join(path,file_name)
+        img = cv2.imread(file_path)
+        if img is None:
+            print("Could not read {file_path}")
+            continue
+    normalized = img/ maximum_pixel_value
+
 
     print(f'Image pixels normalized to {maximum_pixel_value}')
-'''
 
 
 
@@ -157,7 +157,7 @@ def main():
     process_filenames(data_path)
 
     # normalize pixels via Min Max (dividing by the max value)
-    # normalize_pixel_values(data_path) #FIXME
+    normalize_pixel_values(data_path)
 
 
 
