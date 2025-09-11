@@ -28,6 +28,10 @@ Evaluation:  assess results, interpret patterns \
 Knowledge/Deployment:  use insights in decision-making
 
 
+
+## Next Steps
+Edge detection, train a model to recognize the contents of images
+
 ## To get started ##
 Activate a virtual environment if you so choose \
 Ensure you are using python 3.9+ \

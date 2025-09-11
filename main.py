@@ -174,13 +174,6 @@ def sharpen_images(path: str): #FIXME - Saves images in parent folder
     print(f'Sharpened images - Elapsed time: {round(elapsed,2)} seconds')
 
 
-
-
-
-
-
-
-
 def main():
     
     # Load dotenv
@@ -210,7 +203,7 @@ def main():
     Sharpened images - Elapsed time: 87.27 seconds
     '''
 
-
+    
 
     
 
