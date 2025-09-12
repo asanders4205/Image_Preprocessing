@@ -112,36 +112,7 @@ def preprocess_images(path: str, target_size: tuple[int, int] = (512, 512)) -> N
     verify_files_are_images(path)
     verify_images_are_uniform_size(path, target_size)
     process_filenames(path)
-    # normalize_pixel_values(path)
-
-
-def normalize_pixel_values(path: str, maximum_pixel_value: float = 255.0):
-    '''Constant brightness
-    Param: Max pixel value, default of 255.0
-    '''
-
-    start = time.perf_counter() # Start clock
-
-    output_dir = os.path.join(path, 'normalized') # Make directory of normalized images
-    os.makedirs(output_dir, exist_ok=True)
-
-    for file_name in sorted(os.listdir(path)):
-        file_path = os.path.join(path,file_name)
-        img = cv2.imread(file_path)
-        if img is None:
-            print("Could not read {file_path}")
-            continue
-        normalized = img/ maximum_pixel_value
-
-        # Scale for saving
-        save_img = (normalized * 255).astype('uint8')
-
-        out_path = os.path.join(output_dir, file_name)
-        cv2.imwrite(out_path, save_img)
-
-    elapsed = time.perf_counter() - start # End clock
-    print(f'Image pixels normalized to {maximum_pixel_value}')
-    print(f'Elapsed time - Normalizing pixel values: {round(elapsed,2)} seconds')
+    normalize_pixel_values(path)
 
 
 def sharpen_images(path: str): #FIXME - Saves images in parent folder
@@ -174,6 +145,53 @@ def sharpen_images(path: str): #FIXME - Saves images in parent folder
     print(f'Sharpened images - Elapsed time: {round(elapsed,2)} seconds')
 
 
+
+def normalize_pixel_values(path: str, maximum_pixel_value: float = 255.0):
+    '''Constant brightness
+    Param: Max pixel value, default of 255.0
+    '''
+
+
+
+    start = time.perf_counter() # Start clock
+
+    output_dir = os.path.join(path, 'normalized') # Make directory of normalized images
+    os.makedirs(output_dir, exist_ok=True)
+
+    for file_name in sorted(os.listdir(path)):
+        file_path = os.path.join(path,file_name)
+        img = cv2.imread(file_path)
+        if img is None:
+            print("Could not read {file_path}")
+            continue
+        normalized = img/ maximum_pixel_value
+
+        # Scale for saving
+        save_img = (normalized * 255).astype('uint8')
+
+        out_path = os.path.join(output_dir, file_name)
+        cv2.imwrite(out_path, save_img)
+
+    elapsed = time.perf_counter() - start # End clock
+    print(f'Image pixels normalized to {maximum_pixel_value}')
+    print(f'Elapsed time - Normalizing pixel values: {round(elapsed,2)} seconds')
+
+
+
+def images_not_normalized(input_path: str, normalized_images_path: str):
+    '''Count num images in input and normalized folders'''
+    num_input = len(os.listdir(input_path)) #num of images in input folder
+    num_normalized = len(os.listdir(normalized_images_path))
+
+    if (num_input != num_normalized):
+        print(f'{input_path} and {normalized_images_path} have differing numbers of files')
+        return True
+    else:
+        return False
+
+
+
+
 def main():
     
     # Load dotenv
@@ -182,6 +200,7 @@ def main():
 
     data_path = r'input_images' # Hold images in project directory for development
     images_origin = os.getenv("images_filepath") # Name of variable in .env file
+
 
     #Verify images are loaded
     if images_not_loaded(data_path, images_origin):
@@ -195,17 +214,9 @@ def main():
 
     # Sharpen images
     # sharpen_images(data_path) #FIXME
-    # TODO Debug sharpen_images
-    ''' Error message
-        Directories the same, moving on.
-    [ WARN:0@87.844] global loadsave.cpp:275 cv::findDecoder imread_('input_images\normalized'): can't open/read file: check file path/integrity
-    Could not read {file_path}
-    Sharpened images - Elapsed time: 87.27 seconds
-    '''
 
-    
 
-    
+
 
 
 
