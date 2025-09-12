@@ -8,7 +8,7 @@ import time
 import numpy as np
 
 
-def images_not_loaded(folder_1: str, folder_2: str) -> bool:
+def images_loaded(folder_1: str, folder_2: str) -> bool:
     '''Check if the image dataset is loaded already
         See if directory contents are the same quantity
         No parameters
@@ -25,9 +25,25 @@ def images_not_loaded(folder_1: str, folder_2: str) -> bool:
     # print(f'count_diff: {count_diff}')
 
     if count_diff == 0:
+        return True
+    else:
+        return False
+
+
+
+def images_normalized(input_path: str, normalized_images_path: str) -> bool:
+    '''Count num images in input and normalized folders'''
+    num_input = len(os.listdir(input_path)) #num of images in input folder
+    num_normalized = len(os.listdir(normalized_images_path))
+
+    if (num_input != num_normalized):
+        print(f'{input_path} and {normalized_images_path} have differing numbers of files')
         return False
     else:
         return True
+
+
+
 
 
 def verify_files_are_images(path: str) -> None:
@@ -103,6 +119,7 @@ def process_filenames(path: str):
     print(f'Filenames processed: {counter} filenames changed')
 
 
+
 def preprocess_images(path: str, target_size: tuple[int, int] = (512, 512)) -> None:
     """
     Runs verification steps: file type, image size, process filenames and normalize pixel values #TODO consider mulithreading
@@ -112,7 +129,10 @@ def preprocess_images(path: str, target_size: tuple[int, int] = (512, 512)) -> N
     verify_files_are_images(path)
     verify_images_are_uniform_size(path, target_size)
     process_filenames(path)
-    normalize_pixel_values(path)
+
+
+    if not images_normalized():
+        normalize_pixel_values(path)
 
 
 def sharpen_images(path: str): #FIXME - Saves images in parent folder
@@ -178,20 +198,6 @@ def normalize_pixel_values(path: str, maximum_pixel_value: float = 255.0):
 
 
 
-def images_not_normalized(input_path: str, normalized_images_path: str):
-    '''Count num images in input and normalized folders'''
-    num_input = len(os.listdir(input_path)) #num of images in input folder
-    num_normalized = len(os.listdir(normalized_images_path))
-
-    if (num_input != num_normalized):
-        print(f'{input_path} and {normalized_images_path} have differing numbers of files')
-        return True
-    else:
-        return False
-
-
-
-
 def main():
     
     # Load dotenv
@@ -203,7 +209,7 @@ def main():
 
 
     #Verify images are loaded
-    if images_not_loaded(data_path, images_origin):
+    if not images_loaded(data_path, images_origin):
         print('Loading and processing images...')
         preprocess_images(data_path) # verify images, verify size, process filenames, normalize pixel values
     else:
