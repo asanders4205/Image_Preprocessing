@@ -129,7 +129,7 @@ def preprocess_images(path: str, target_size: tuple[int, int] = (512, 512)) -> N
     process_filenames(path)
 
 
-    if not images_normalized():
+    if not images_normalized(path, 'normalized'):
         normalize_pixel_values(path)
 
 
@@ -150,7 +150,7 @@ def sharpen_images(path: str): #FIXME - Saves images in parent folder
         file_path = os.path.join(path,file_name)
         img = cv2.imread(file_path)
         if img is None:
-            print(f'Could not read {file_path}')
+            print(f'Could not read {file_name}')
             continue
 
         # Sharpen the image
@@ -238,13 +238,13 @@ def main():
 
 
     #Verify images are loaded
-    '''
-    if not images_loaded(data_path, images_origin): # TODO Can eliminate and run project from .cache/kagglehub
-        print('Loading and processing images...')
-        preprocess_images(data_path) # verify images, verify size, process filenames, normalize pixel values
-    else:
-        print("Directories the same, moving on.")
-    '''
+    
+    # if not images_loaded(data_path, images_origin): # TODO Can eliminate and run project from .cache/kagglehub
+    #     print('Loading and processing images...')
+    preprocess_images(data_path) # verify images, verify size, process filenames, normalize pixel values
+    # else:
+    #     print("Directories the same, moving on.")
+    
 
     # print('normalizing pixel values (main)')
     normalize_pixel_values(data_path)
