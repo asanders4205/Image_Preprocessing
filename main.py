@@ -37,7 +37,7 @@ def images_normalized(input_path: str, normalized_images_path: str) -> bool:
     num_normalized = len(os.listdir(normalized_images_path))
 
     if (num_input != num_normalized):
-        print(f'{input_path} and {normalized_images_path} have differing numbers of files')
+        print(f'/{input_path} and /{normalized_images_path} have differing numbers of files. Images may not be loaded')
         return False
     else:
         return True
