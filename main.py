@@ -8,6 +8,19 @@ import time
 import numpy as np
 
 
+
+
+
+
+
+# def load_from_kaggle():
+
+
+
+
+
+
+
 def images_loaded(folder_1: str, folder_2: str) -> bool:
     '''Check if the image dataset is loaded already
         See if directory contents are the same quantity
@@ -29,8 +42,6 @@ def images_loaded(folder_1: str, folder_2: str) -> bool:
     else:
         return False
 
-
-
 def images_normalized(input_path: str, normalized_images_path: str) -> bool:
     '''Count num images in input and normalized folders'''
     num_input = len(os.listdir(input_path)) #num of images in input folder
@@ -41,9 +52,6 @@ def images_normalized(input_path: str, normalized_images_path: str) -> bool:
         return False
     else:
         return True
-
-
-
 
 
 def verify_files_are_images(path: str) -> None:
@@ -122,10 +130,11 @@ def process_filenames(path: str):
 
 def preprocess_images(path: str, target_size: tuple[int, int] = (512, 512)) -> None:
     """
-    Runs verification steps: file type, image size, process filenames and normalize pixel values #TODO consider mulithreading
+    Runs verification steps: file type, image size, process filenames and normalize pixel values
+        #TODO consider mulithreading
+        #TODO consider adding boolean check functions for each processing function
     """
 
-    # start = time.perf_counter() # Start clock
     verify_files_are_images(path)
     verify_images_are_uniform_size(path, target_size)
     process_filenames(path)
@@ -200,6 +209,23 @@ def normalize_pixel_values(path: str, maximum_pixel_value: float = 255.0):
 
 def main():
     
+
+
+    # Download latest version
+    path = kagglehub.dataset_download("nisarahmedrana/biq2021")
+
+    print("Path to dataset files:", path)
+
+
+
+
+
+
+
+
+
+
+'''
     # Load dotenv
     load_dotenv()
 
@@ -216,11 +242,11 @@ def main():
         print("Directories the same, moving on.")
 
     # print('normalizing pixel values (main)')
-    # normalize_pixel_values(data_path)
+    normalize_pixel_values(data_path)
 
     # Sharpen images
     # sharpen_images(data_path) #FIXME
-
+'''
 
 
 
