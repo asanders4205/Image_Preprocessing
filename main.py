@@ -10,17 +10,6 @@ import numpy as np
 
 
 
-
-
-
-# def load_from_kaggle():
-
-
-
-
-
-
-
 def images_loaded(folder_1: str, folder_2: str) -> bool:
     '''Check if the image dataset is loaded already
         See if directory contents are the same quantity
@@ -161,7 +150,7 @@ def sharpen_images(path: str): #FIXME - Saves images in parent folder
         file_path = os.path.join(path,file_name)
         img = cv2.imread(file_path)
         if img is None:
-            print("Could not read {file_path}")
+            print(f'Could not read {file_path}')
             continue
 
         # Sharpen the image
@@ -183,6 +172,11 @@ def normalize_pixel_values(path: str, maximum_pixel_value: float = 255.0):
 
 
     start = time.perf_counter() # Start clock
+
+    if not os.path.exists('normalized'):
+        os.makedirs('normalized')
+
+
 
     output_dir = os.path.join(path, 'normalized') # Make directory of normalized images
     os.makedirs(output_dir, exist_ok=True)
@@ -207,46 +201,57 @@ def normalize_pixel_values(path: str, maximum_pixel_value: float = 255.0):
 
 
 
+def import_dataset_from_kaggle(url: str) -> str:
+    '''
+        Get images from kaggle dataset 
+        Input: URL
+        Output: Local filepath in .cache/kagglehub
+    '''
+    # Download latest version
+    output_path = kagglehub.dataset_download(url)
+
+    print('Downloaded dataset from {url}\n to folder: {output_path}')
+
+    return output_path
+
+
 def main():
     
 
 
-    # Download latest version
-    path = kagglehub.dataset_download("nisarahmedrana/biq2021")
-
-    print("Path to dataset files:", path)
-
-
-
-
-
-
-
-
-
-
-'''
     # Load dotenv
     load_dotenv()
 
 
+    # URL
+    # kaggle_url = 'https://www.kaggle.com//datasets//nisarahmedrana//biq2021'
+
+
+
+    # Import kaggle images
+    # images_origin = kagglehub.dataset_download("nisarahmedrana/biq2021") # TODO make a trigger for downloading the files from kaggle
+    # print("Path to dataset files:", images_origin)
+    images_origin = os.getenv('images_filepath')
+
     data_path = r'input_images' # Hold images in project directory for development
-    images_origin = os.getenv("images_filepath") # Name of variable in .env file
+    # images_origin = import_dataset_from_kaggle(kaggle_url)
 
 
     #Verify images are loaded
-    if not images_loaded(data_path, images_origin):
+    '''
+    if not images_loaded(data_path, images_origin): # TODO Can eliminate and run project from .cache/kagglehub
         print('Loading and processing images...')
         preprocess_images(data_path) # verify images, verify size, process filenames, normalize pixel values
     else:
         print("Directories the same, moving on.")
+    '''
 
     # print('normalizing pixel values (main)')
     normalize_pixel_values(data_path)
 
     # Sharpen images
     # sharpen_images(data_path) #FIXME
-'''
+
 
 
 
