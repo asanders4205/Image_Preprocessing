@@ -266,25 +266,24 @@ def main():
     images_origin = os.getenv('images_filepath')
 
     # images_origin = import_dataset_from_kaggle(kaggle_url)
-    data_path = r'input_images' # Hold images in project directory for development
+    input_images = r'input_images' # Hold images in project directory for development
     parent_folder= os.getcwd()
 
     #Verify images are loaded
     
-    if not images_loaded(data_path, images_origin): # TODO Can eliminate and run project from .cache/kagglehub
+    if not images_loaded(input_images, images_origin): # TODO Can eliminate and run project from .cache/kagglehub
         print('Loading and processing images...')
-        preprocess_images(data_path) # verify images, verify size, process filenames, normalize pixel values
+        preprocess_images(input_images) # verify images, verify size, process filenames, normalize pixel values
     else:
         print("Directories the same, moving on.")
     
 
-    # print('normalizing pixel values (main)')
+    print('normalizing pixel values (main)')
     normalize_pixel_values(parent_folder)
 
     # Sharpen images
-    # sharpen_images(data_path) #FIXME
+    sharpen_images(input_images)
 
-#TODO move /normalized to the parent folder
 
 
 
