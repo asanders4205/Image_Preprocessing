@@ -31,16 +31,26 @@ def images_loaded(folder_1: str, folder_2: str) -> bool:
     else:
         return False
 
-def images_normalized(input_path: str, normalized_images_path: str) -> bool:
-    '''Count num images in input and normalized folders'''
-    num_input = len(os.listdir(input_path)) #num of images in input folder
-    num_normalized = len(os.listdir(normalized_images_path))
 
-    if (num_input != num_normalized):
-        print(f'/{input_path} and /{normalized_images_path} have differing numbers of files. Images may not be loaded')
-        return False
-    else:
+
+def normalized_is_empty():
+    '''Return true if empty'''
+    if len(os.listdir('.//normalized') == 0):
         return True
+    else:
+        return False
+
+
+# def images_normalized(input_path: str, normalized_images_path: str) -> bool:
+#     '''Count num images in input and normalized folders'''
+#     num_input = len(os.listdir(input_path)) #num of images in input folder
+#     num_normalized = len(os.listdir(normalized_images_path))
+
+#     if (num_input != num_normalized):
+#         print(f'/{input_path} and /{normalized_images_path} have differing numbers of files. Images may not be loaded')
+#         return False
+#     else:
+#         return True
 
 
 def verify_files_are_images(path: str) -> None:
@@ -129,8 +139,14 @@ def preprocess_images(path: str, target_size: tuple[int, int] = (512, 512)) -> N
     process_filenames(path)
 
 
-    if not images_normalized(path, 'normalized'):
-        normalize_pixel_values(path)
+    if (normalized_is_empty): # Checks ./normalized
+        normalize_pixel_values
+
+# TODO call normalzied function after alteration
+    # if not images_normalized(path, 'normalized'):
+    #     normalize_pixel_values(path)
+
+
 
 
 def sharpen_images(path: str): #FIXME - Saves images in parent folder
@@ -164,14 +180,22 @@ def sharpen_images(path: str): #FIXME - Saves images in parent folder
 
 
 
+
+
+
+
+
+
+
+
+
 def normalize_pixel_values(path: str, maximum_pixel_value: float = 255.0):
     '''Constant brightness
     Param: Max pixel value, default of 255.0
     '''
-
-
-
     start = time.perf_counter() # Start clock
+
+
 
     if not os.path.exists('normalized'):
         os.makedirs('normalized')
@@ -198,6 +222,18 @@ def normalize_pixel_values(path: str, maximum_pixel_value: float = 255.0):
     elapsed = time.perf_counter() - start # End clock
     print(f'Image pixels normalized to {maximum_pixel_value}')
     print(f'Elapsed time - Normalizing pixel values: {round(elapsed,2)} seconds')
+
+#TODO work within the parent folder
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -233,17 +269,17 @@ def main():
     # print("Path to dataset files:", images_origin)
     images_origin = os.getenv('images_filepath')
 
-    data_path = r'input_images' # Hold images in project directory for development
     # images_origin = import_dataset_from_kaggle(kaggle_url)
+    data_path = r'input_images' # Hold images in project directory for development
 
 
     #Verify images are loaded
     
-    # if not images_loaded(data_path, images_origin): # TODO Can eliminate and run project from .cache/kagglehub
-    #     print('Loading and processing images...')
-    preprocess_images(data_path) # verify images, verify size, process filenames, normalize pixel values
-    # else:
-    #     print("Directories the same, moving on.")
+    if not images_loaded(data_path, images_origin): # TODO Can eliminate and run project from .cache/kagglehub
+        print('Loading and processing images...')
+        preprocess_images(data_path) # verify images, verify size, process filenames, normalize pixel values
+    else:
+        print("Directories the same, moving on.")
     
 
     # print('normalizing pixel values (main)')
@@ -252,7 +288,7 @@ def main():
     # Sharpen images
     # sharpen_images(data_path) #FIXME
 
-
+#TODO move /normalized to the parent folder
 
 
 
