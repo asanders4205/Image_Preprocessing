@@ -35,7 +35,7 @@ def images_loaded(folder_1: str, folder_2: str) -> bool:
 
 def normalized_is_empty():
     '''Return true if empty'''
-    if len(os.listdir('.//normalized') == 0):
+    if len(os.listdir('normalized') == 0):
         return True
     else:
         return False
@@ -62,7 +62,9 @@ def verify_files_are_images(path: str) -> None:
     bad_dir = 'bad_files'
     os.makedirs(bad_dir, exist_ok=True)
 
-    for file_name in sorted(os.listdir(path)):
+
+    for file_name in (os.listdir(path)):
+
         _, ext = os.path.splitext(file_name)
         ext = ext.lower()
         image_path = os.path.join(path, file_name)
@@ -75,6 +77,7 @@ def verify_files_are_images(path: str) -> None:
             except UnidentifiedImageError:
                 print(f'Moving {file_name} to bad_files/')
                 shutil.move(image_path, bad_dir)
+
 
 
 def verify_images_are_uniform_size(path: str, target_size: tuple[int, int] = (512, 512)) -> None:
@@ -127,24 +130,32 @@ def process_filenames(path: str):
 
 
 
-def preprocess_images(path: str, target_size: tuple[int, int] = (512, 512)) -> None:
+def preprocess_images(input_images_folder: str, target_size: tuple[int, int] = (512, 512)) -> None:
     """
     Runs verification steps: file type, image size, process filenames and normalize pixel values
         # consider mulithreading
         # consider adding boolean check functions for each processing function
     """
 
-    verify_files_are_images(path)
-    verify_images_are_uniform_size(path, target_size)
-    process_filenames(path)
+
+    print(f'Calling verify_files_are_images with argument {input_images_folder}')
+    verify_files_are_images(input_images_folder)
+
+    print(f'Calling verify_images_are_uniform_size with argument {input_images_folder}')
+    verify_images_are_uniform_size(input_images_folder, target_size)
+
+
+
+    print(f'Calling process_filenames with argument {input_images_folder}')    
+    process_filenames(input_images_folder)
 
 
     if (normalized_is_empty): # Checks ./normalized
-        # normalize_pixel_values() #TODO Include arguments
+        normalize_pixel_values() #TODO Include arguments
 
 # TODO call normalzied function after alteration
-    # if not images_normalized(path, 'normalized'):
-    #     normalize_pixel_values(path)
+    # if not images_normalized(input_images_folder, 'normalized'):
+    #     normalize_pixel_values(input_images_folder)
 
 
 
@@ -266,23 +277,25 @@ def main():
     images_origin = os.getenv('images_filepath')
 
     # images_origin = import_dataset_from_kaggle(kaggle_url)
-    input_images = r'input_images' # Hold images in project directory for development
-    parent_folder= os.getcwd()
+    working_directory= os.getcwd()
+    print(f'working_directory: {working_directory}')
+
+    input_images_folder = os.path.join(working_directory, 'input_images')
 
     #Verify images are loaded
     
-    if not images_loaded(input_images, images_origin): # TODO Can eliminate and run project from .cache/kagglehub
-        print('Loading and processing images...')
-        preprocess_images(input_images) # verify images, verify size, process filenames, normalize pixel values
-    else:
-        print("Directories the same, moving on.")
+    # if not images_loaded(input_images, images_origin): # TODO Can eliminate and run project from .cache/kagglehub
+    print('Loading and processing images...')
+    preprocess_images(input_images_folder) # verify images, verify size, process filenames, normalize pixel values
+    # else:
+        # print("Directories the same, moving on.")
     
 
-    print('normalizing pixel values (main)')
-    normalize_pixel_values(parent_folder)
+    # print('normalizing pixel values (main)')
+    # normalize_pixel_values(working_directory,)
 
     # Sharpen images
-    sharpen_images(input_images)
+    # sharpen_images(#normalized directory here)
 
 
 
