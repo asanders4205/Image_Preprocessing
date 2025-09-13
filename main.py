@@ -130,8 +130,8 @@ def process_filenames(path: str):
 def preprocess_images(path: str, target_size: tuple[int, int] = (512, 512)) -> None:
     """
     Runs verification steps: file type, image size, process filenames and normalize pixel values
-        #TODO consider mulithreading
-        #TODO consider adding boolean check functions for each processing function
+        # consider mulithreading
+        # consider adding boolean check functions for each processing function
     """
 
     verify_files_are_images(path)
@@ -140,7 +140,7 @@ def preprocess_images(path: str, target_size: tuple[int, int] = (512, 512)) -> N
 
 
     if (normalized_is_empty): # Checks ./normalized
-        normalize_pixel_values
+        # normalize_pixel_values() #TODO Include arguments
 
 # TODO call normalzied function after alteration
     # if not images_normalized(path, 'normalized'):
@@ -189,12 +189,14 @@ def sharpen_images(path: str): #FIXME - Saves images in parent folder
 
 
 
-def normalize_pixel_values(path: str, maximum_pixel_value: float = 255.0):
+def normalize_pixel_values(working_directory: str, maximum_pixel_value: float = 255.0):
     '''Constant brightness
-    Param: Max pixel value, default of 255.0
+
+    Param:
+        working_directory: Working directory, contains this program /input_images and /normalized
+        Max pixel value, default of 255.0
     '''
     start = time.perf_counter() # Start clock
-
 
 
     if not os.path.exists('normalized'):
@@ -202,11 +204,11 @@ def normalize_pixel_values(path: str, maximum_pixel_value: float = 255.0):
 
 
 
-    output_dir = os.path.join(path, 'normalized') # Make directory of normalized images
-    os.makedirs(output_dir, exist_ok=True)
+    normalized_images_directory = os.path.join(working_directory, 'normalized') # Directory for normalized images
+    os.makedirs(normalized_images_directory, exist_ok=True)
 
-    for file_name in sorted(os.listdir(path)):
-        file_path = os.path.join(path,file_name)
+    for file_name in sorted(os.listdir(working_directory)):
+        file_path = os.path.join(working_directory,file_name)
         img = cv2.imread(file_path)
         if img is None:
             print("Could not read {file_path}")
@@ -216,18 +218,12 @@ def normalize_pixel_values(path: str, maximum_pixel_value: float = 255.0):
         # Scale for saving
         save_img = (normalized * 255).astype('uint8')
 
-        out_path = os.path.join(output_dir, file_name)
+        out_path = os.path.join(normalized_images_directory, file_name)
         cv2.imwrite(out_path, save_img)
 
     elapsed = time.perf_counter() - start # End clock
     print(f'Image pixels normalized to {maximum_pixel_value}')
     print(f'Elapsed time - Normalizing pixel values: {round(elapsed,2)} seconds')
-
-#TODO work within the parent folder
-
-
-
-
 
 
 
@@ -271,7 +267,7 @@ def main():
 
     # images_origin = import_dataset_from_kaggle(kaggle_url)
     data_path = r'input_images' # Hold images in project directory for development
-
+    parent_folder= os.getcwd()
 
     #Verify images are loaded
     
@@ -283,7 +279,7 @@ def main():
     
 
     # print('normalizing pixel values (main)')
-    normalize_pixel_values(data_path)
+    normalize_pixel_values(parent_folder)
 
     # Sharpen images
     # sharpen_images(data_path) #FIXME
