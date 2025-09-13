@@ -32,15 +32,6 @@ def images_loaded(folder_1: str, folder_2: str) -> bool:
         return False
 
 
-
-def normalized_is_empty():
-    '''Return true if empty'''
-    if len(os.listdir('normalized') == 0):
-        return True
-    else:
-        return False
-
-
 # def images_normalized(input_path: str, normalized_images_path: str) -> bool:
 #     '''Count num images in input and normalized folders'''
 #     num_input = len(os.listdir(input_path)) #num of images in input folder
@@ -58,6 +49,7 @@ def verify_files_are_images(path: str) -> None:
     Verifies that all files in a provided directory are images.
     If a non-image file is found, move it to bad_files folder.
     """
+    print(f'Arg to verify fils are images: {path}')
     valid_exts = {".jpg", ".jpeg", ".png", ".gif", ".bmp", ".tiff"}
     bad_dir = 'bad_files'
     os.makedirs(bad_dir, exist_ok=True)
@@ -129,7 +121,6 @@ def process_filenames(path: str):
     print(f'Filenames processed: {counter} filenames changed')
 
 
-
 def preprocess_images(input_images_folder: str, target_size: tuple[int, int] = (512, 512)) -> None:
     """
     Runs verification steps: file type, image size, process filenames and normalize pixel values
@@ -150,14 +141,11 @@ def preprocess_images(input_images_folder: str, target_size: tuple[int, int] = (
     process_filenames(input_images_folder)
 
 
-    if (normalized_is_empty): # Checks ./normalized
-        normalize_pixel_values() #TODO Include arguments
+    normalize_pixel_values() #TODO Include arguments
 
-# TODO call normalzied function after alteration
-    # if not images_normalized(input_images_folder, 'normalized'):
-    #     normalize_pixel_values(input_images_folder)
-
-
+    # TODO call normalzied function after alteration
+        # if not images_normalized(input_images_folder, 'normalized'):
+        #     normalize_pixel_values(input_images_folder)
 
 
 def sharpen_images(path: str): #FIXME - Saves images in parent folder
