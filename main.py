@@ -141,9 +141,12 @@ def preprocess_images(input_images_folder: str, target_size: tuple[int, int] = (
     process_filenames(input_images_folder)
 
 
-    normalize_pixel_values() #TODO Include arguments
+    current_dir = os.getcwd()
 
-    # TODO call normalzied function after alteration
+    normalize_pixel_values(current_dir) #TODO Include arguments
+
+
+    #TODO return from normalize_pixel_values() the path of normalized images
         # if not images_normalized(input_images_folder, 'normalized'):
         #     normalize_pixel_values(input_images_folder)
 
@@ -188,12 +191,16 @@ def sharpen_images(path: str): #FIXME - Saves images in parent folder
 
 
 
-def normalize_pixel_values(working_directory: str, maximum_pixel_value: float = 255.0):
-    '''Constant brightness
+def normalize_pixel_values(working_directory: str, maximum_pixel_value: float = 255.0) -> str:
+    ''' Works from current working directory to access /normalized and /input_images
+
+    Constant brightness
 
     Param:
         working_directory: Working directory, contains this program /input_images and /normalized
         Max pixel value, default of 255.0
+
+        Returns String: Filepath of normalized image directory
     '''
     start = time.perf_counter() # Start clock
 
@@ -224,6 +231,7 @@ def normalize_pixel_values(working_directory: str, maximum_pixel_value: float = 
     print(f'Image pixels normalized to {maximum_pixel_value}')
     print(f'Elapsed time - Normalizing pixel values: {round(elapsed,2)} seconds')
 
+    return normalized_images_directory
 
 
 
