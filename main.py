@@ -6,7 +6,7 @@ import cv2
 from dotenv import load_dotenv
 import time
 import numpy as np
-
+from pathlib import Path
 
 
 
@@ -209,6 +209,12 @@ def normalize_pixel_values(working_directory: str, maximum_pixel_value: float = 
     last_print = start
     print_interval = 10 # seconds
 
+    # Progress tracker
+    path = os.path.join(working_directory, 'normalized')
+    images_qty_denom = sum(1 for entry in os.listdir(path) if os.path.isfile(os.path.join(path, entry)))
+
+
+    images_qty_num = 0 # Image counter variable: used as numerator
     
     if not os.path.exists('normalized'):
         os.makedirs('normalized')
@@ -230,6 +236,9 @@ def normalize_pixel_values(working_directory: str, maximum_pixel_value: float = 
         # Scale for saving
         save_img = (normalized * 255).astype('uint8')
 
+        # Iterate counter
+        images_qty_num += 1
+
         out_path = os.path.join(normalized_images_directory, file_name)
         cv2.imwrite(out_path, save_img)
 
@@ -238,6 +247,9 @@ def normalize_pixel_values(working_directory: str, maximum_pixel_value: float = 
         if now - last_print >= print_interval:
             elapsed = now - start
             print(f'Elapsed: {elapsed:.2f} seconds')
+            last_print = now
+
+            print(f'Images processed: {images_qty_num}/{images_qty_denom}')
 
 
 
