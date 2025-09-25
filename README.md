@@ -1,33 +1,13 @@
 '''
 # Image Quality Classifier #
 
-## The goal of this process is to classify images as good quality or bad quality! ##
+## The goal of this process is to preprocess images to prepare them for use in a model ##
 
 Programmed using the BIQ2021 dataset found on Kaggle here:\
 https://www.kaggle.com/datasets/nisarahmedrana/biq2021
 
 
 Uses python 3.9+ \
-Programmed on Windows, may not be portable. Modifications to follow 
-
-The processing will be done step-by-step\
-    and will reference the Knowledge Discovery in Databases (KDD) process outlined below
-
-Selection:  identify and collect relevant data\
-    > Load in the dataset\
-Preprocessing:  clean and handle missing/noisy data.\
-    > Resizing\
-    > Grayscaling\
-    > Noise reduction\
-    > Normalization\
-    > Binarization\
-    > Contrast enhancement\
-Transformation:  normalize, reduce, or engineer features \
-Data Mining:  apply algorithms (classification, clustering, etc.) \
-Evaluation:  assess results, interpret patterns \
-Knowledge/Deployment:  use insights in decision-making
-
-
 
 ## Next Steps
 Edge detection, train a model to recognize the contents of images
