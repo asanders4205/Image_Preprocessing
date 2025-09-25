@@ -32,18 +32,6 @@ def images_loaded(folder_1: str, folder_2: str) -> bool:
         return False
 
 
-# def images_normalized(input_path: str, normalized_images_path: str) -> bool:
-#     '''Count num images in input and normalized folders'''
-#     num_input = len(os.listdir(input_path)) #num of images in input folder
-#     num_normalized = len(os.listdir(normalized_images_path))
-
-#     if (num_input != num_normalized):
-#         print(f'/{input_path} and /{normalized_images_path} have differing numbers of files. Images may not be loaded')
-#         return False
-#     else:
-#         return True
-
-
 def verify_files_are_images(path: str) -> None:
     """
     Verifies that all files in a provided directory are images.
@@ -174,20 +162,12 @@ def sharpen_images(path: str):
         # Sharpen the image
         save_img = cv2.filter2D(img, -1, kernel)
 
+        # Save in the original file, overwriting the unsharpened image
         out_path = os.path.join(path, file_name)
         cv2.imwrite(out_path, save_img)
 
     elapsed = time.perf_counter() - start # End clock
     print(f'Sharpened images - Elapsed time: {round(elapsed,2)} seconds')
-
-
-
-
-
-
-
-
-
 
 
 
@@ -258,12 +238,6 @@ def normalize_pixel_values(working_directory: str, maximum_pixel_value: float = 
     print(f'Elapsed time - Normalizing pixel values: {round(elapsed,2)} seconds')
 
     return normalized_images_directory
-
-
-
-
-
-
 
 
 def import_dataset_from_kaggle(url: str) -> str:

@@ -3,3 +3,4 @@ kagglehub
 pillow
 opencv-python
 numpy
+pathlib
