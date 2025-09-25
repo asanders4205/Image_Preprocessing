@@ -30,6 +30,8 @@ def images_loaded(folder_1: str, folder_2: str) -> bool:
         return True
     else:
         return False
+
+
 def verify_files_are_images(path: str) -> None:
     """
     Verifies that all files in a provided directory are images.
@@ -55,6 +57,8 @@ def verify_files_are_images(path: str) -> None:
             except UnidentifiedImageError:
                 print(f'Moving {file_name} to bad_files/')
                 shutil.move(image_path, bad_dir)
+
+
 def verify_images_are_uniform_size(path: str, target_size: tuple[int, int] = (512, 512)) -> None:
     """
     Verifies that all images in the directory are of the same size.
@@ -79,6 +83,8 @@ def verify_images_are_uniform_size(path: str, target_size: tuple[int, int] = (51
                 resized_counter += 1
 
     print(f'Files validated. All images are of size {target_size}')
+
+
 def process_filenames(path: str):
     '''Remove certain characters from filenames
     '''
@@ -100,6 +106,8 @@ def process_filenames(path: str):
             counter += 1
 
     print(f'Filenames processed: {counter} filenames changed')
+
+
 def preprocess_images(input_images_folder: str, target_size: tuple[int, int] = (512, 512)) -> None:
     """
     Runs verification steps: file type, image size, process filenames and normalize pixel values
@@ -122,12 +130,9 @@ def preprocess_images(input_images_folder: str, target_size: tuple[int, int] = (
 
     current_dir = os.getcwd()
 
-    normalize_pixel_values(current_dir) #TODO Include arguments
+    normalize_pixel_values(current_dir)
 
 
-    #TODO return from normalize_pixel_values() the path of normalized images
-        # if not images_normalized(input_images_folder, 'normalized'):
-        #     normalize_pixel_values(input_images_folder)
 def sharpen_images(path: str):
     #Sharpen images with cv2.filter2D()
 
@@ -157,7 +162,9 @@ def sharpen_images(path: str):
 
     elapsed = time.perf_counter() - start # End clock
     print(f'Sharpened images - Elapsed time: {round(elapsed,2)} seconds')
-def normalize_pixel_values(working_directory: str, maximum_pixel_value: float = 255.0) -> str: #FIXME infinite loop
+
+
+def normalize_pixel_values(working_directory: str, maximum_pixel_value: float = 255.0) -> str:
     ''' Works from current working directory to access /normalized and /input_images
 
     Constant brightness
@@ -224,6 +231,8 @@ def normalize_pixel_values(working_directory: str, maximum_pixel_value: float = 
     print(f'Elapsed time - Normalizing pixel values: {round(elapsed,2)} seconds')
 
     return normalized_images_directory
+
+
 def import_dataset_from_kaggle(url: str) -> str:
     '''
         Get images from kaggle dataset 
