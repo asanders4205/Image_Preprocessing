@@ -118,7 +118,7 @@ def process_filenames(path: str):
             os.rename(old_path, new_path)
             counter += 1
 
-    print(f'Filenames processed: {counter} filenames changed') #FIXME program keeps running here
+    print(f'Filenames processed: {counter} filenames changed')
 
 
 def preprocess_images(input_images_folder: str, target_size: tuple[int, int] = (512, 512)) -> None:
@@ -151,7 +151,7 @@ def preprocess_images(input_images_folder: str, target_size: tuple[int, int] = (
         #     normalize_pixel_values(input_images_folder)
 
 
-def sharpen_images(path: str): #FIXME - Saves images in parent folder
+def sharpen_images(path: str):
     #Sharpen images with cv2.filter2D()
 
     start = time.perf_counter() # Start clock
@@ -217,7 +217,7 @@ def normalize_pixel_values(working_directory: str, maximum_pixel_value: float = 
         file_path = os.path.join(normalized_images_directory,file_name)
         img = cv2.imread(file_path)
         if img is None:
-            print(f'Could not read {file_path} (msg source: normalize_pixel_values)') #FIXME getting errors here
+            print(f'Could not read {file_path} (msg source: normalize_pixel_values)')
             continue
         normalized = img/ maximum_pixel_value
 
