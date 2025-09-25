@@ -118,7 +118,7 @@ def process_filenames(path: str):
             os.rename(old_path, new_path)
             counter += 1
 
-    print(f'Filenames processed: {counter} filenames changed')
+    print(f'Filenames processed: {counter} filenames changed') #FIXME program keeps running here
 
 
 def preprocess_images(input_images_folder: str, target_size: tuple[int, int] = (512, 512)) -> None:
@@ -191,7 +191,7 @@ def sharpen_images(path: str): #FIXME - Saves images in parent folder
 
 
 
-def normalize_pixel_values(working_directory: str, maximum_pixel_value: float = 255.0) -> str:
+def normalize_pixel_values(working_directory: str, maximum_pixel_value: float = 255.0) -> str: #FIXME infinite loop
     ''' Works from current working directory to access /normalized and /input_images
 
     Constant brightness
