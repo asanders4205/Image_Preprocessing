@@ -202,9 +202,14 @@ def normalize_pixel_values(working_directory: str, maximum_pixel_value: float = 
 
         Returns String: Filepath of normalized image directory
     '''
+    print(f'Normalizing pixel values to {maximum_pixel_value} ...')
+
+    # Start timer
     start = time.perf_counter() # Start clock
+    last_print = start
+    print_interval = 10 # seconds
 
-
+    
     if not os.path.exists('normalized'):
         os.makedirs('normalized')
 
@@ -213,8 +218,9 @@ def normalize_pixel_values(working_directory: str, maximum_pixel_value: float = 
     normalized_images_directory = os.path.join(working_directory, 'normalized') # Directory for normalized images
     os.makedirs(normalized_images_directory, exist_ok=True)
 
-    for file_name in sorted(os.listdir(normalized_images_directory)):
-        file_path = os.path.join(normalized_images_directory,file_name)
+    input_images_directory = os.path.join(working_directory, 'input_images')
+    for file_name in sorted(os.listdir(input_images_directory)):
+        file_path = os.path.join(input_images_directory, file_name)
         img = cv2.imread(file_path)
         if img is None:
             print(f'Could not read {file_path} (msg source: normalize_pixel_values)')
@@ -226,6 +232,14 @@ def normalize_pixel_values(working_directory: str, maximum_pixel_value: float = 
 
         out_path = os.path.join(normalized_images_directory, file_name)
         cv2.imwrite(out_path, save_img)
+
+        # Inside loop: Print elapsed time every 10 seconds
+        now = time.perf_counter()
+        if now - last_print >= print_interval:
+            elapsed = now - start
+            print(f'Elapsed: {elapsed:.2f} seconds')
+
+
 
     elapsed = time.perf_counter() - start # End clock
     print(f'Image pixels normalized to {maximum_pixel_value}')
