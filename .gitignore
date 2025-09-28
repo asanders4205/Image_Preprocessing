@@ -2,7 +2,10 @@
 /bad_files
 /data
 /input_images
+
 /venv
+.venv/
+
 todo
 documentation.txt
 
@@ -11,3 +14,25 @@ documentation.txt
 *.jpg
 *.img
 /normalized
+
+.vscode
+
+# Logs
+*.log
+
+
+# Coverage / testing
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Packaging
+dist/
+build/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
