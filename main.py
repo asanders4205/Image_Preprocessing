@@ -7,6 +7,8 @@ from dotenv import load_dotenv
 import time
 import numpy as np
 from pathlib import Path
+from pytest import ExitCode
+from tests_module import add
 
 
 
@@ -249,6 +251,7 @@ def import_dataset_from_kaggle(url: str) -> str:
 
 def main():
     
+    result = add(10,20)
 
 
     # Load dotenv
