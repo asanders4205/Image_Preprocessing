@@ -30,3 +30,9 @@ jobs:
             restore-keys: |
               ${{ runner.os }}-pip-${{ matrix.python-version }}-
               ${{ runner.os }}-pip-
+
+        - name: Install dependencies
+          run: pip install -r requirements.txt # executes shell command in VM
+
+        - name: Run tests
+          run: pytest
