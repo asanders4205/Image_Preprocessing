@@ -36,3 +36,10 @@ __pycache__/
 *.pyo
 *.pyd
 *.so
+
+
+# ignore incomplete test work 
+tests/
+tests_module/
+pytest.ini
+test_sample.py
