@@ -1,15 +1,22 @@
 '''
-# Image Quality Classifier #
+# Image Classification #
 
-## The goal of this program is to preprocess images to prepare them for use in a model ##
+## This project will be a complete end-to-end data pipeline for Computer Vision, including: ##
 
-Programmed using the BIQ2021 dataset found on Kaggle here:\
+### Preprocessing (DONE) ###
+### Image Quality Classification ###
+### Edge Detection ###
+### Object Recognition ###
+
+The sample data I used for preprocessing is the BIQ2021 dataset found here on Kaggle:\
 https://www.kaggle.com/datasets/nisarahmedrana/biq2021
 
 
 Uses python 3.9+ 
 
 ## Next Steps
+CI\CD
+Make portable to other operating systems and python versions 
 Edge detection, train a model to recognize the contents of images
 
 
