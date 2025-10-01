@@ -2,7 +2,12 @@ python-dotenv
 kagglehub
 pillow
 opencv-python
-numpy
 pathlib
 pytest
 pytest-cov
+
+
+numpy
+pandas
+torch
+matplotlib
