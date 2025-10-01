@@ -2,9 +2,8 @@ import os
 from dotenv import load_dotenv
 from pathlib import Path
 
-from src.pipeline.preprocess.transform import preprocess_images
 
-
+from preprocess.transform import preprocess_images
 
 def main():
     
