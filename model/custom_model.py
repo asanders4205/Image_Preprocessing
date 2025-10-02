@@ -43,6 +43,14 @@ def process_data_labels():
 
 
 
+def assign_quality_label():
+    data = pd.read_csv("data/BIQ2021_cleaned.csv")    
+    
+    quality_bins = [0, 0.5, 0.75, 1]
+    names = ['low', 'medium', 'high']
+
+    data['QualityRating'] = pd.cut(data['MOS'], quality_bins, labels=names)
+
 # Labelled data preprocessed
 '''
 The file contains 3 attributes, MOS is the target variable whereas the image only or image as well as standard deviation can be used as independent variable:
@@ -53,3 +61,7 @@ MOS: provides corresponding mean opinion score (MOS) for each image and will be 
 
 StandardDeviation: provides the standard deviation of ratings obtained from several subjects which can be used as attribute during training.
 '''
+
+
+process_data_labels()
+assign_quality_label()
