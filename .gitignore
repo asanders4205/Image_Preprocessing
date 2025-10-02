@@ -2,6 +2,10 @@
 /bad_files
 /data
 /input_images
+BIQ2021_cleaned.csv
+BIQ2021.csv
+*.csv
+
 
 /venv
 .venv/
@@ -14,6 +18,7 @@ documentation.txt
 *.jpg
 *.img
 /normalized
+
 
 .vscode
 
@@ -37,9 +42,3 @@ __pycache__/
 *.pyd
 *.so
 
-
-# ignore incomplete test work 
-tests/
-tests_module/
-pytest.ini
-test_sample.py

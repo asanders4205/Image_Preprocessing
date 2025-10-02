@@ -1,41 +1,55 @@
-
-
-
-
-# '''Format the BIQ2021 image label file'''
-# def process_filenames_in_labelled_data(path: str):
-#     '''Remove certain characters from filenames
-#     '''
-#     print('Processing filenames')
-#     replacements = {" ":"_", "(":"", ")":""}
-#     files = sorted(os.listdir(path))
-#     counter = 0
-
-#     for file_name in files:
-#         new_name = file_name
-#         # counter += 1
-#         for old,new in replacements.items():
-#             new_name = new_name.replace(old, new)
-
-#         if new_name != file_name: # Rename if changed
-#             old_path = os.path.join(path, file_name)
-#             new_path = os.path.join(path, new_name)
-#             os.rename(old_path, new_path)
-#             counter += 1
-
-#     print(f'Filenames processed: {counter} filenames changed')
-
-
-
-
-'''Convert to pandas df
-iterate over rows
-in col 0 replace certain chars with others'''
-
 import pandas as pd
-data = pd.read_csv('data\BIQ2021.csv')
+import os
+
+def process_data_labels():
+    """
+    Reads image filenames and labels from 'data/BIQ2021.csv', cleans the filenames by replacing spaces with underscores and removing parentheses,
+    updates the DataFrame, prints the number of filenames changed, displays sample rows, and exports the cleaned data to 'data/BIQ2021_cleaned.csv'.
+    Returns:
+        None
+    """
+    data = pd.read_csv("data/BIQ2021.csv")
 
 
-for i, row in data.head(2).iterrows():
-    new_col_name = data.iloc[i,0]
-    print(new_col_name)
+    print("Processing filenames")
+    replacements = {" ": "_", "(": "", ")": ""}
+
+    counter = 0
+
+# Apply replacements directly to the first column (filenames)
+    new_filenames = []
+    for file_name in data.iloc[:, 0]:
+        new_name = file_name
+        for old, new in replacements.items():
+            new_name = new_name.replace(old, new)
+        if new_name != file_name:
+            counter += 1
+        new_filenames.append(new_name)
+
+# Update dataframe with cleaned filenames
+    data.iloc[:, 0] = new_filenames
+
+    print(f"Filenames processed: {counter} filenames changed")
+
+# Show sample rows
+    for i, row in data.head(2).iterrows():
+        print(i, row)
+        print()
+
+# Export cleaned DataFrame to a new CSV
+    data.to_csv("data/BIQ2021_cleaned.csv", index=False)
+    print("Exported cleaned file list to data/BIQ2021_cleaned.csv")
+
+
+
+
+# Labelled data preprocessed
+'''
+The file contains 3 attributes, MOS is the target variable whereas the image only or image as well as standard deviation can be used as independent variable:
+
+Images: provide the name of the image with correct file extension.
+
+MOS: provides corresponding mean opinion score (MOS) for each image and will be used as target label.
+
+StandardDeviation: provides the standard deviation of ratings obtained from several subjects which can be used as attribute during training.
+'''
