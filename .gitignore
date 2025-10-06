@@ -42,3 +42,6 @@ __pycache__/
 *.pyd
 *.so
 
+
+# Project planning
+project_planning.txt
