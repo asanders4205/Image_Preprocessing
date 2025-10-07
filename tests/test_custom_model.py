@@ -1,7 +1,7 @@
 import pytest
 import pandas as pd
 import os
-from model import custom_model
+from preprocess import format_labels
 
 @pytest.fixture
 def sample_csv(tmp_path):
@@ -24,7 +24,7 @@ def test_process_data_labels(monkeypatch, sample_csv, tmp_path):
     # Patch print to suppress output
     monkeypatch.setattr("builtins.print", lambda *a, **k: None)
     # Run function
-    custom_model.process_data_labels()
+    format_labels.process_data_labels()
     # Check output file exists
     cleaned_path = tmp_path / "data" / "BIQ2021_cleaned.csv"
     assert cleaned_path.exists()

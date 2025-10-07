@@ -81,7 +81,7 @@ def assign_quality_label():
 
     # Save back from dataframe to csv
     # dataframe_name = pd.to_csv('out_filepath.csv')
-    data_labels.to_csv(labelled_dataset_path, sep = '\t')
+    data_labels.to_csv(labelled_dataset_path, sep = ',')
 
     # Labelled data preprocessed
     '''
