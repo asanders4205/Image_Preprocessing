@@ -1,5 +1,5 @@
 import os
-
+from dotenv import load_dotenv
 
 def images_loaded(folder_1: str, folder_2: str) -> bool:
     '''Check if the image dataset is loaded already
@@ -12,7 +12,10 @@ def images_loaded(folder_1: str, folder_2: str) -> bool:
     count_1 = sum(1 for f in os.listdir(folder_1) if os.path.isfile(os.path.join(folder_1, f)))
 
     # Replace with env variable - make portable for other users
-    --folder_2 = r"C:\\Users\\alecs\\.cache\\kagglehub\\datasets\\nisarahmedrana\\biq2021\versions\\4"
+    load_dotenv()
+
+    folder_2 = os.getenv("images_filepath")
+
     count_2 = sum(1 for f in os.listdir(folder_2) if os.path.isfile(os.path.join(folder_2, f)))
 
     count_diff = count_1 - count_2
