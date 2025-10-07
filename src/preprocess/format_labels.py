@@ -2,7 +2,12 @@ import pandas as pd
 import os
 '''Format labels in CSV containing quality rating
    - Rename files
-   - Assign each decimal quality rating to a category'''
+   - Assign each decimal quality rating to a category
+   
+   Input - CSV file contianing image names, their Mean opinion scores, and stdev of that score in the dataset.
+    Distribution is heavilty right-skewed and roughly normal (most values are to the left of the mean).
+   
+   '''
 def process_data_labels():
     """
     Reads image filenames and labels from 'data/BIQ2021.csv', cleans the filenames by replacing spaces with underscores and removing parentheses,
@@ -57,7 +62,7 @@ def assign_quality_label():
     max = data_labels['MOS'].max()
 
 
-    print('Summary stats:\n',
+    print('Summary stats of mean opinion score (MOS):\n',
            f'min: {min}',
            f'q1: {q1}',
            f'q2: {q2}',
