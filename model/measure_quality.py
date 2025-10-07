@@ -4,16 +4,12 @@ import cv2 as cv
 import numpy as np
 # from imutils import paths #A series of convenience functions to make basic image processing functions such as translation, rotation, resizing, skeletonization, displaying Matplotlib images, sorting contours, detecting edges, and much more easier with OpenCV and both Python 2.7 and Python 3
 import argparse
-
+from imutils import paths
 
 # Image qualtiy metrics
 # https://www.mathworks.com/help/images/image-quality-metrics.html
 # https://learnopencv.com/image-quality-assessment-brisque/
-
 # blur with opencv https://pyimagesearch.com/2015/09/07/blur-detection-with-opencv/
-
-# Laplacian to make less blurry
-
 
 def variance_of_laplacian(image):
 	# compute the Laplacian of the image and then return the focus
@@ -23,12 +19,12 @@ def variance_of_laplacian(image):
 
 def measure_blur(directory_path):
     # loop over the input images
-    for imagePath in paths.list_images(args["images"]):
+    for imagePath in paths.list_images(directory_path):
         # load the image, convert it to grayscale, and compute the
         # focus measure of the image using the Variance of Laplacian
         # method
-        image = cv2.imread(imagePath)
-        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        image = cv.imread(imagePath)
+        gray = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
         fm = variance_of_laplacian(gray)
         text = "Not Blurry"
         # if the focus measure is less than the supplied threshold,
@@ -36,15 +32,24 @@ def measure_blur(directory_path):
         if fm < args["threshold"]:
             text = "Blurry"
         # show the image
-        cv2.putText(image, "{}: {:.2f}".format(text, fm), (10, 30),
-            cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 3)
-        cv2.imshow("Image", image)
-        key = cv2.waitKey(0)
+        cv.putText(image, "{}: {:.2f}".format(text, fm), (10, 30),
+            cv.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 3)
+        cv.imshow("Image", image)
+        key = cv.waitKey(0)
+
+
+
+
+
+
+
+
+        
 
 
 
 # Call functions (when running, include import statements)
-measure_blur()
+measure_blur('data\input_images')
 
 
 
