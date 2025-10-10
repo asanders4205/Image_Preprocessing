@@ -2,7 +2,6 @@ import pandas as pd
 import os
 import cv2 as cv
 import numpy as np
-# from imutils import paths #A series of convenience functions to make basic image processing functions such as translation, rotation, resizing, skeletonization, displaying Matplotlib images, sorting contours, detecting edges, and much more easier with OpenCV and both Python 2.7 and Python 3
 import argparse
 from imutils import paths
 
@@ -16,8 +15,14 @@ def variance_of_laplacian(image):
 	# measure, which is simply the variance of the Laplacian
 	return cv.Laplacian(image, cv.CV_64F).var()
 
-
-def measure_blur(directory_path):
+'''Loop over directory, return variance for each image?'''
+def measure_blur(directory_path): # Return a dataframe
+    # define threshold
+    threshold = 100.0
+    
+    # Define series
+    blurriness_ratings = []
+    
     # loop over the input images
     for imagePath in paths.list_images(directory_path):
         # load the image, convert it to grayscale, and compute the
@@ -29,32 +34,48 @@ def measure_blur(directory_path):
         text = "Not Blurry"
         # if the focus measure is less than the supplied threshold,
         # then the image should be considered "blurry"
-        if fm < args["threshold"]:
+        if fm < threshold:
             text = "Blurry"
-        # show the image
+        
+        blurriness_ratings.append(fm)
+        '''# show the image
         cv.putText(image, "{}: {:.2f}".format(text, fm), (10, 30),
             cv.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 3)
         cv.imshow("Image", image)
-        key = cv.waitKey(0)
+        key = cv.waitKey(0)'''
+    # End for
 
-
-
-
-
-
-
-
-        
+    return blurriness_ratings
 
 
 
 # Call functions (when running, include import statements)
-measure_blur('data\input_images')
+# key = 'full_images_filepath'
+# input_path = os.getenv(key)
+# measure_blur(input_path)
 
 
+image_blurs = measure_blur('data/input_images')
+
+print(image_blurs[:5])
 
 
+'''
 
+    # Convert csv to df
+    df = pd.read_csv(directory_path)
+
+    # Get number of ratings
+    num_of_ratings = blurriness_ratings.size
+
+    # Make sure there's a rating for every image
+    assert df.length == num_of_ratings
+
+    # print(f'df length: {df.length}')
+
+    # print(f'num_of_ratings: {num_of_ratings}')
+
+'''
 
 
 
