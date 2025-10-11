@@ -1,49 +1,44 @@
 import pandas as pd
-import os
-import cv2 as cv
-import numpy as np
-import argparse
 from imutils import paths
+import cv2 as cv
 
-# Image qualtiy metrics
-# https://www.mathworks.com/help/images/image-quality-metrics.html
-# https://learnopencv.com/image-quality-assessment-brisque/
-# blur with opencv https://pyimagesearch.com/2015/09/07/blur-detection-with-opencv/
+# Image quality metrics references:
+# - https://www.mathworks.com/help/images/image-quality-metrics.html
+# - https://learnopencv.com/image-quality-assessment-brisque/
+# - https://pyimagesearch.com/2015/09/07/blur-detection-with-opencv/
 
 def variance_of_laplacian(image):
-	# compute the Laplacian of the image and then return the focus
-	# measure, which is simply the variance of the Laplacian
-	return cv.Laplacian(image, cv.CV_64F).var()
+    """
+    Compute the variance of the Laplacian (focus measure) for a grayscale image.
+    Higher values indicate a sharper (less blurry) image.
+    """
+    return cv.Laplacian(image, cv.CV_64F).var()
 
-'''Loop over directory, return variance for each image?'''
-def measure_blur(directory_path): # Return a dataframe
-    # define threshold
-    threshold = 100.0
-    
-    # Define series
+def measure_blur(directory_path, threshold=100.0):
+    """
+    Compute a blurriness score (variance of Laplacian) for each image
+    found under directory_path.
+
+    Returns:
+        list[float]: Blurriness (focus) measures for each image.
+    """
     blurriness_ratings = []
-    
-    # loop over the input images
-    for imagePath in paths.list_images(directory_path):
-        # load the image, convert it to grayscale, and compute the
-        # focus measure of the image using the Variance of Laplacian
-        # method
-        image = cv.imread(imagePath)
+
+    for image_path in paths.list_images(directory_path):
+        image = cv.imread(image_path)
+        if image is None:
+            continue  # Skip unreadable files
+
         gray = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
         fm = variance_of_laplacian(gray)
-        text = "Not Blurry"
-        # if the focus measure is less than the supplied threshold,
-        # then the image should be considered "blurry"
-        if fm < threshold:
-            text = "Blurry"
-        
+
+        # Optional classification
+        text = "Not Blurry" if fm >= threshold else "Blurry"
+
         blurriness_ratings.append(fm)
-        '''# show the image
-        cv.putText(image, "{}: {:.2f}".format(text, fm), (10, 30),
-            cv.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 3)
-        cv.imshow("Image", image)
-        key = cv.waitKey(0)'''
-    # End for
+
+    return blurriness_ratings
+
 
     return blurriness_ratings
 
@@ -61,7 +56,6 @@ print(image_blurs[:5])
 
 
 '''
-
     # Convert csv to df
     df = pd.read_csv(directory_path)
 
