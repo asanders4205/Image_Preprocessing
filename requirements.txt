@@ -1,19 +1,22 @@
 python-dotenv
 kagglehub
 pillow
-
 numpy
 pandas
-
 opencv-contrib-python
 pathlib
 matplotlib
-
 imutils
 
 
+opencv-python
 # pytest
 # pytest-cov
 
 # torch
 # torchvision
+
+
+
+# opencv prereqs
+scipy
