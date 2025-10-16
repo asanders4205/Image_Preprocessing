@@ -20,3 +20,7 @@ opencv-python
 
 # opencv prereqs
 scipy
+
+
+# TF
+tensorflow
