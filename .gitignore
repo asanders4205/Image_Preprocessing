@@ -18,7 +18,7 @@ documentation.txt
 *.jpg
 *.img
 /normalized
-
+/resized_images
 
 .vscode
 
