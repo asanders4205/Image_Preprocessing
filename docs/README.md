@@ -1,12 +1,9 @@
 '''
 # Image Classification #
 
-## This project will be a complete end-to-end data pipeline for Computer Vision, including: ##
+## Image preprocessing pipeline for Computer Vision, including: ##
 
 ### Preprocessing (DONE) ###
-### Image Quality Classification ###
-### Edge Detection ###
-### Object Recognition ###
 
 The sample data I used for preprocessing is the BIQ2021 dataset found here on Kaggle:\
 https://www.kaggle.com/datasets/nisarahmedrana/biq2021
